@@ -4,7 +4,6 @@ import random
 from wordfreq import top_n_list
 from collections import Counter
 st.markdown("                                          -----🧠🧠🧠 Welcome to Smart Guesser 🧠🧠🧠-----                                         ")
-
 def give_random_letters_according_to_difficuilty_level(n):
     if n==3:
         random_letters =['a', 'e', 'r', 't', 'l', 'n', 's', 'o', 'p', 'd']
@@ -84,14 +83,17 @@ def words_for_each_num_of_letter(n):
             for _ in range(r):
                     p=0
                     while True:
+                            
                             x = st.text_input("➡️  ", key=f"word_input_{p}").strip().lower()
-                            if x in words:
+                            if x:
+                             if x in words:
                                     total_words -= 1
                                     entered_correct_words += 1
                                     st.markdown(f"  ✅ Entered Correct Word                                                          Correct words entered: {entered_correct_words}   Remaining words: {total_words}")
                                     break
-                            else:
+                             else:
                                     st.markdown(f"  ❌ Incorrect Word. Please enter a valid word below.                         Letters Allowed {letters} ")
+                            
                             p+=1
                             if entered_correct_words >= 20:
                                 if entered_correct_words % 2 == 0:
@@ -129,12 +131,13 @@ def words_for_each_num_of_letter(n):
             p=0
             while True:
                 x = st.text_input("➡️  ", key=f"word_input_{p}").strip().lower()
-                if x in words:
+                if x:
+                 if x in words:
                     total_words -= 1
                     entered_correct_words += 1
                     st.markdown(f"  ✅ Entered Correct Word                                                          Correct words entered: {entered_correct_words}   Remaining words: {total_words}")
                     break
-                else:
+                 else:
                     st.markdown(f"  ❌ Incorrect Word. Please enter a valid word below.     Letters Allowed {letters}")
                 p+=1
             if entered_correct_words >= 20:
@@ -172,12 +175,13 @@ def words_for_each_num_of_letter(n):
             p=0
             while True:
                 x = st.text_input("➡️  ", key=f"word_input_{p}").strip().lower()
-                if x in words:
+                if x:
+                 if x in words:
                     total_words -= 1
                     entered_correct_words += 1
                     st.markdown(f"  ✅ Entered Correct Word                                                          Correct words entered: {entered_correct_words}   Remaining words: {total_words}")
                     break
-                else:
+                 else:
                     st.markdown(f"  ❌ Incorrect Word. Please enter a valid word below.    Letters Allowed {letters}")
             p+=1
             if entered_correct_words >= 20:
@@ -214,12 +218,13 @@ def words_for_each_num_of_letter(n):
             p=0
             while True:
                 x = st.text_input("➡️  ", key=f"word_input_{p }").strip().lower()
-                if x in words:
+                if x:
+                 if x in words:
                     total_words -= 1
                     entered_correct_words += 1
                     st.markdown(f"  ✅ Entered Correct Word                                                          Correct words entered: {entered_correct_words}   Remaining words: {total_words}")
                     break
-                else:
+                 else:
                     st.markdown(f"  ❌ Incorrect Word. Please enter a valid word below.")
                     st.markdown(f"                      Letters Allowed {letters}")
                 p+=1
@@ -258,12 +263,13 @@ def words_for_each_num_of_letter(n):
             p=0
             while True:
                 x = st.text_input("➡️  ", key=f"word_input_{p }").strip().lower()
-                if x in words:
+                if x:
+                 if x in words:
                     total_words -= 1
                     entered_correct_words += 1
                     st.markdown(f"  ✅ Entered Correct Word                                                          Correct words entered: {entered_correct_words}   Remaining words: {total_words}")
                     break
-                else:
+                 else:
                     st.markdown(f"  ❌ Incorrect Word. Please enter a valid word below. ")
                     st.markdown(f"                      Letters Allowed {letters}")
                 p+=1
@@ -302,12 +308,13 @@ def words_for_each_num_of_letter(n):
             p=0
             while True:
                 x = st.text_input("➡️  ", key=f"word_input_{p }").strip().lower()
-                if x in words:
+                if x:
+                 if x in words:
                     total_words -= 1
                     entered_correct_words += 1
                     st.markdown(f"  ✅ Entered Correct Word                                                          Correct words entered: {entered_correct_words}   Remaining words: {total_words}")
                     break
-                else:
+                 else:
                     st.markdown(f"  ❌ Incorrect Word. Please enter a valid word below.")
                     st.markdown(f"                      Letters Allowed {letters}")
                 p+=1
@@ -347,12 +354,13 @@ def words_for_each_num_of_letter(n):
             p=0
             while True:
                 x = st.text_input("➡️  ", key=f"word_input_{p }").strip().lower()
-                if x in words:
+                if x:
+                 if x in words:
                     total_words -= 1
                     entered_correct_words += 1
                     st.markdown(f"  ✅ Entered Correct Word                                                          Correct words entered: {entered_correct_words}   Remaining words: {total_words}")
                     break
-                else:
+                 else:
                     st.markdown(f"❌ Incorrect Word. Please enter a valid word below.")
                     st.markdown(f"                      Letters Allowed {letters}")
             p+=1
@@ -391,12 +399,13 @@ def words_for_each_num_of_letter(n):
             p=0
             while True:
                 x = st.text_input("➡️  ", key=f"word_input_{p }").strip().lower()
-                if x in words:
+                if x:
+                 if x in words:
                     total_words -= 1
                     entered_correct_words += 1
                     st.markdown(f"  ✅ Entered Correct Word                                                          Correct words entered: {entered_correct_words}   Remaining words: {total_words}")
                     break
-                else:
+                 else:
                     st.markdown(f"  ❌ Incorrect Word. Please enter a valid word below. ")
                     st.markdown(f"                      Letters Allowed {letters}")
             p+=1
@@ -435,12 +444,13 @@ def words_for_each_num_of_letter(n):
             p=0
             while True:
                 x = st.text_input("➡️  ", key=f"word_input_{p}").strip().lower()
-                if x in words:
+                if x:
+                 if x in words:
                     total_words -= 1
                     entered_correct_words += 1
                     st.markdown(f"  ✅ Entered Correct Word                                                          Correct words entered: {entered_correct_words}   Remaining words: {total_words}")
                     break
-                else:
+                 else:
                     st.markdown(f"  ❌ Incorrect Word. Please enter a valid word below.")
                     st.markdown(f"                      Letters Allowed {letters}")
             p+=1
@@ -479,12 +489,13 @@ def words_for_each_num_of_letter(n):
             p=0
             while True:
                 x = st.text_input("➡️  ", key=f"word_input_{p }").strip().lower()
-                if x in words:
+                if x:
+                 if x in words:
                     total_words -= 1
                     entered_correct_words += 1
                     st.markdown(f"  ✅ Entered Correct Word                                                          Correct words entered: {entered_correct_words}   Remaining words: {total_words} ")
                     break
-                else:
+                 else:
                     st.markdown(f"  ❌ Incorrect Word. Please enter a valid word below. Letters Allowed {letters}")
                 p+=1
             if entered_correct_words >= 20:
@@ -515,4 +526,3 @@ def main():
     st.markdown("                                                       ---- Goodbye 👋 ----")
 
 main()
-
