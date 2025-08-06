@@ -1,4 +1,5 @@
-print("                                          -----🧠🧠🧠 Welcome to Smart Guesser 🧠🧠🧠-----                                         ")
+st.markdown("                                          -----🧠🧠🧠 Welcome to Smart Guesser 🧠🧠🧠-----                                         ")
+import streamlit as st
 import random 
 from wordfreq import top_n_list
 from collections import Counter
@@ -74,28 +75,28 @@ def words_for_each_num_of_letter(n):
             words = sorted(valid_words)
             total_words=len(words)
             entered_correct_words=0
-            print("                                     ❗You Have to Enter at least 20 words to finish this stage ❗")
-            print(f"Total Words: {total_words}") 
-            print(" Start Entering Words One By One.")
+            st.markdown("                                     ❗You Have to Enter at least 20 words to finish this stage ❗")
+            st.markdown(f"Total Words: {total_words}") 
+            st.markdown(" Start Entering Words One By One.")
             r=total_words
     
             for _ in range(r):
                     while True:
-                            x = input("➡️  ").strip().lower()
+                            x = st.text_input("➡️  ").strip().lower()
                             if x in words:
                                     total_words -= 1
                                     entered_correct_words += 1
-                                    print(f"  ✅ Entered Correct Word                                                          Correct words entered: {entered_correct_words}   Remaining words: {total_words}")
+                                    st.markdown(f"  ✅ Entered Correct Word                                                          Correct words entered: {entered_correct_words}   Remaining words: {total_words}")
                                     break
                             else:
-                                    print(f"  ❌ Incorrect Word. Please enter a valid word below.                         Letters Allowed {letters} ")
+                                    st.markdown(f"  ❌ Incorrect Word. Please enter a valid word below.                         Letters Allowed {letters} ")
                             
                             if entered_correct_words >= 20:
                                 if entered_correct_words % 2 == 0:
-                                    skip = input("  ➡ For Going to the next stage, Enter (YES). Otherwise (NO): ").strip().lower()
+                                    skip = st.text_input("  ➡ For Going to the next stage, Enter (YES). Otherwise (NO): ").strip().lower()
                                     if skip == "yes":
-                                                    print(f"\n  🎉 Hurray! You have entered {entered_correct_words} Correct Words! 🏆")
-                                                    print("                        ---Moving to Next Stage---")
+                                                    st.markdown(f"\n  🎉 Hurray! You have entered {entered_correct_words} Correct Words! 🏆")
+                                                    st.markdown("                        ---Moving to Next Stage---")
                                                     return
                                     else:
                                             pass
@@ -117,28 +118,28 @@ def words_for_each_num_of_letter(n):
         total_words = len(words)
         entered_correct_words = 0
 
-        print("                                     ❗You Have to Enter at least 20 words to finish this stage ❗")
-        print(f"Total Words: {total_words}") 
-        print(" Start Entering Words One By One.")
+        st.markdown("                                     ❗You Have to Enter at least 20 words to finish this stage ❗")
+        st.markdown(f"Total Words: {total_words}") 
+        st.markdown(" Start Entering Words One By One.")
         r = total_words
 
         for _ in range(r):
             while True:
-                x = input("➡️  ").strip().lower()
+                x = st.text_input("➡️  ").strip().lower()
                 if x in words:
                     total_words -= 1
                     entered_correct_words += 1
-                    print(f"  ✅ Entered Correct Word                                                          Correct words entered: {entered_correct_words}   Remaining words: {total_words}")
+                    st.markdown(f"  ✅ Entered Correct Word                                                          Correct words entered: {entered_correct_words}   Remaining words: {total_words}")
                     break
                 else:
-                    print(f"  ❌ Incorrect Word. Please enter a valid word below.     Letters Allowed {letters}")
+                    st.markdown(f"  ❌ Incorrect Word. Please enter a valid word below.     Letters Allowed {letters}")
             
             if entered_correct_words >= 20:
                if entered_correct_words % 2 == 0:
-                  skip = input("    ➡ For Going to the next stage, Enter (YES). Otherwise (NO): ").strip().lower()
+                  skip = st.text_input("    ➡ For Going to the next stage, Enter (YES). Otherwise (NO): ").strip().lower()
                   if skip == "yes":
-                    print(f"\n  🎉 Hurray! You have entered {entered_correct_words} Correct Words! 🏆")
-                    print("                        ---Moving to Next Stage---")
+                    st.markdown(f"\n  🎉 Hurray! You have entered {entered_correct_words} Correct Words! 🏆")
+                    st.markdown("                        ---Moving to Next Stage---")
                     return
 
 
@@ -159,28 +160,28 @@ def words_for_each_num_of_letter(n):
         total_words = len(words)
         entered_correct_words = 0
 
-        print("                                     ❗You Have to Enter at least 20 words to finish this stage ❗")
-        print(f"Total Words: {total_words}") 
-        print(" Start Entering Words One By One.")
+        st.markdown("                                     ❗You Have to Enter at least 20 words to finish this stage ❗")
+        st.markdown(f"Total Words: {total_words}") 
+        st.markdown(" Start Entering Words One By One.")
         r = total_words
 
         for _ in range(r):
             while True:
-                x = input("➡️  ").strip().lower()
+                x = st.text_input("➡️  ").strip().lower()
                 if x in words:
                     total_words -= 1
                     entered_correct_words += 1
-                    print(f"  ✅ Entered Correct Word                                                          Correct words entered: {entered_correct_words}   Remaining words: {total_words}")
+                    st.markdown(f"  ✅ Entered Correct Word                                                          Correct words entered: {entered_correct_words}   Remaining words: {total_words}")
                     break
                 else:
-                    print(f"  ❌ Incorrect Word. Please enter a valid word below.    Letters Allowed {letters}")
+                    st.markdown(f"  ❌ Incorrect Word. Please enter a valid word below.    Letters Allowed {letters}")
             
             if entered_correct_words >= 20:
               if entered_correct_words % 2 == 0:
-                skip = input("    ➡ For Going to the next stage, Enter (YES). Otherwise (NO): ").strip().lower()
+                skip = st.text_input("    ➡ For Going to the next stage, Enter (YES). Otherwise (NO): ").strip().lower()
                 if skip == "yes":
-                    print(f"\n  🎉 Hurray! You have entered {entered_correct_words} Correct Words! 🏆")
-                    print("                        ---Moving to Next Stage---")
+                    st.markdown(f"\n  🎉 Hurray! You have entered {entered_correct_words} Correct Words! 🏆")
+                    st.markdown("                        ---Moving to Next Stage---")
                     return
 
 
@@ -200,28 +201,28 @@ def words_for_each_num_of_letter(n):
         total_words = len(words)
         entered_correct_words = 0
 
-        print("                                     ❗You Have to Enter at least 20 words to finish this stage ❗")
-        print(f"Total Words: {total_words}") 
-        print(" Start Entering Words One By One.")
+        st.markdown("                                     ❗You Have to Enter at least 20 words to finish this stage ❗")
+        st.markdown(f"Total Words: {total_words}") 
+        st.markdown(" Start Entering Words One By One.")
         r = total_words
 
         for _ in range(r):
             while True:
-                x = input("➡️  ").strip().lower()
+                x = st.text_input("➡️  ").strip().lower()
                 if x in words:
                     total_words -= 1
                     entered_correct_words += 1
-                    print(f"  ✅ Entered Correct Word                                                          Correct words entered: {entered_correct_words}   Remaining words: {total_words}")
+                    st.markdown(f"  ✅ Entered Correct Word                                                          Correct words entered: {entered_correct_words}   Remaining words: {total_words}")
                     break
                 else:
-                    print(f"  ❌ Incorrect Word. Please enter a valid word below.")
-                    print(f"                      Letters Allowed {letters}")
+                    st.markdown(f"  ❌ Incorrect Word. Please enter a valid word below.")
+                    st.markdown(f"                      Letters Allowed {letters}")
             if entered_correct_words >= 20:
               if entered_correct_words % 2 == 0:
-                skip = input("  ➡ For Going to the next stage, Enter (YES). Otherwise (NO): ").strip().lower()
+                skip = st.text_input("  ➡ For Going to the next stage, Enter (YES). Otherwise (NO): ").strip().lower()
                 if skip == "yes":
-                    print(f"\n  🎉 Hurray! You have entered {entered_correct_words} Correct Words! 🏆")
-                    print("                        ---Moving to Next Stage---")
+                    st.markdown(f"\n  🎉 Hurray! You have entered {entered_correct_words} Correct Words! 🏆")
+                    st.markdown("                        ---Moving to Next Stage---")
                     return
 
 
@@ -241,30 +242,30 @@ def words_for_each_num_of_letter(n):
         total_words = len(words)
         entered_correct_words = 0
 
-        print("                                     ❗You Have to Enter at least 20 words to finish this stage ❗")
-        print(f"Total Words: {total_words}")
-        print(" Start Entering Words One By One.")
+        st.markdown("                                     ❗You Have to Enter at least 20 words to finish this stage ❗")
+        st.markdown(f"Total Words: {total_words}")
+        st.markdown(" Start Entering Words One By One.")
 
         r = total_words
 
         for _ in range(r):
             while True:
-                x = input("➡️  ").strip().lower()
+                x = st.text_input("➡️  ").strip().lower()
                 if x in words:
                     total_words -= 1
                     entered_correct_words += 1
-                    print(f"  ✅ Entered Correct Word                                                          Correct words entered: {entered_correct_words}   Remaining words: {total_words}")
+                    st.markdown(f"  ✅ Entered Correct Word                                                          Correct words entered: {entered_correct_words}   Remaining words: {total_words}")
                     break
                 else:
-                    print(f"  ❌ Incorrect Word. Please enter a valid word below. ")
-                    print(f"                      Letters Allowed {letters}")
+                    st.markdown(f"  ❌ Incorrect Word. Please enter a valid word below. ")
+                    st.markdown(f"                      Letters Allowed {letters}")
 
             if entered_correct_words >= 20:
              if entered_correct_words % 2 == 0:
-                skip = input("  ➡ For Going to the next stage, Enter (YES). Otherwise (NO): ").strip().lower()
+                skip = st.text_input("  ➡ For Going to the next stage, Enter (YES). Otherwise (NO): ").strip().lower()
                 if skip == "yes":
-                    print(f"\n  🎉 Hurray! You have entered {entered_correct_words} Correct Words! 🏆")
-                    print("                        ---Moving to Next Stage---")
+                    st.markdown(f"\n  🎉 Hurray! You have entered {entered_correct_words} Correct Words! 🏆")
+                    st.markdown("                        ---Moving to Next Stage---")
                     return
 
 
@@ -284,30 +285,30 @@ def words_for_each_num_of_letter(n):
         total_words = len(words)
         entered_correct_words = 0
 
-        print("                                     ❗You Have to Enter at least 20 words to finish this stage ❗")
-        print(f"Total Words: {total_words}")
-        print(" Start Entering Words One By One.")
+        st.markdown("                                     ❗You Have to Enter at least 20 words to finish this stage ❗")
+        st.markdown(f"Total Words: {total_words}")
+        st.markdown(" Start Entering Words One By One.")
 
         r = total_words
 
         for _ in range(r):
             while True:
-                x = input("➡️  ").strip().lower()
+                x = st.text_input("➡️  ").strip().lower()
                 if x in words:
                     total_words -= 1
                     entered_correct_words += 1
-                    print(f"  ✅ Entered Correct Word                                                          Correct words entered: {entered_correct_words}   Remaining words: {total_words}")
+                    st.markdown(f"  ✅ Entered Correct Word                                                          Correct words entered: {entered_correct_words}   Remaining words: {total_words}")
                     break
                 else:
-                    print(f"  ❌ Incorrect Word. Please enter a valid word below.")
-                    print(f"                      Letters Allowed {letters}")
+                    st.markdown(f"  ❌ Incorrect Word. Please enter a valid word below.")
+                    st.markdown(f"                      Letters Allowed {letters}")
 
             if entered_correct_words >= 20 :
               if entered_correct_words % 2 == 0:
-                skip = input("  ➡ For Going to the next stage, Enter (YES). Otherwise (NO): ").strip().lower()
+                skip = st.text_input("  ➡ For Going to the next stage, Enter (YES). Otherwise (NO): ").strip().lower()
                 if skip == "yes":
-                    print(f"\n  🎉 Hurray! You have entered {entered_correct_words} Correct Words! 🏆")
-                    print("                        ---Moving to Next Stage---")
+                    st.markdown(f"\n  🎉 Hurray! You have entered {entered_correct_words} Correct Words! 🏆")
+                    st.markdown("                        ---Moving to Next Stage---")
                     return
 
 
@@ -328,30 +329,30 @@ def words_for_each_num_of_letter(n):
         total_words = len(words)
         entered_correct_words = 0
 
-        print("                                     ❗You Have to Enter at least 20 words to finish this stage ❗")
-        print(f"Total Words: {total_words}")
-        print(" Start Entering Words One By One.")
+        st.markdown("                                     ❗You Have to Enter at least 20 words to finish this stage ❗")
+        st.markdown(f"Total Words: {total_words}")
+        st.markdown(" Start Entering Words One By One.")
 
         r = total_words
 
         for _ in range(r):
             while True:
-                x = input("➡️  ").strip().lower()
+                x = st.text_input("➡️  ").strip().lower()
                 if x in words:
                     total_words -= 1
                     entered_correct_words += 1
-                    print(f"  ✅ Entered Correct Word                                                          Correct words entered: {entered_correct_words}   Remaining words: {total_words}")
+                    st.markdown(f"  ✅ Entered Correct Word                                                          Correct words entered: {entered_correct_words}   Remaining words: {total_words}")
                     break
                 else:
-                    print(f"❌ Incorrect Word. Please enter a valid word below.")
-                    print(f"                      Letters Allowed {letters}")
+                    st.markdown(f"❌ Incorrect Word. Please enter a valid word below.")
+                    st.markdown(f"                      Letters Allowed {letters}")
 
             if entered_correct_words >= 20:
               if entered_correct_words % 2 == 0:
-                skip = input("  ➡ For Going to the next stage, Enter (YES). Otherwise (NO): ").strip().lower()
+                skip = st.text_input("  ➡ For Going to the next stage, Enter (YES). Otherwise (NO): ").strip().lower()
                 if skip == "yes":
-                    print(f"\n  🎉 Hurray! You have entered {entered_correct_words} Correct Words! 🏆")
-                    print("                        ---Moving to Next Stage---")
+                    st.markdown(f"\n  🎉 Hurray! You have entered {entered_correct_words} Correct Words! 🏆")
+                    st.markdown("                        ---Moving to Next Stage---")
                     return
 
 
@@ -371,30 +372,30 @@ def words_for_each_num_of_letter(n):
         total_words = len(words)
         entered_correct_words = 0
 
-        print("                                     ❗You Have to Enter at least 20 words to finish this stage ❗")
-        print(f"Total Words: {total_words}")
-        print(" Start Entering Words One By One.")
+        st.markdown("                                     ❗You Have to Enter at least 20 words to finish this stage ❗")
+        st.markdown(f"Total Words: {total_words}")
+        st.markdown(" Start Entering Words One By One.")
 
         r = total_words
 
         for _ in range(r):
             while True:
-                x = input("➡️  ").strip().lower()
+                x = st.text_input("➡️  ").strip().lower()
                 if x in words:
                     total_words -= 1
                     entered_correct_words += 1
-                    print(f"  ✅ Entered Correct Word                                                          Correct words entered: {entered_correct_words}   Remaining words: {total_words}")
+                    st.markdown(f"  ✅ Entered Correct Word                                                          Correct words entered: {entered_correct_words}   Remaining words: {total_words}")
                     break
                 else:
-                    print(f"  ❌ Incorrect Word. Please enter a valid word below. ")
-                    print(f"                      Letters Allowed {letters}")
+                    st.markdown(f"  ❌ Incorrect Word. Please enter a valid word below. ")
+                    st.markdown(f"                      Letters Allowed {letters}")
 
             if entered_correct_words >= 20:
              if entered_correct_words % 2 == 0:
-                skip = input("➡ For Going to the next stage, Enter (YES). Otherwise (NO): ").strip().lower()
+                skip = st.text_input("➡ For Going to the next stage, Enter (YES). Otherwise (NO): ").strip().lower()
                 if skip == "yes":
-                    print(f"\n  🎉 Hurray! You have entered {entered_correct_words} Correct Words! 🏆")
-                    print("                        ---Moving to Next Stage---")
+                    st.markdown(f"\n  🎉 Hurray! You have entered {entered_correct_words} Correct Words! 🏆")
+                    st.markdown("                        ---Moving to Next Stage---")
                     return
 
 
@@ -414,30 +415,30 @@ def words_for_each_num_of_letter(n):
         total_words = len(words)
         entered_correct_words = 0
 
-        print("                                     ❗You Have to Enter at least 20 words to finish this stage ❗")
-        print(f"Total Words: {total_words}")
-        print(" Start Entering Words One By One.")
+        st.markdown("                                     ❗You Have to Enter at least 20 words to finish this stage ❗")
+        st.markdown(f"Total Words: {total_words}")
+        st.markdown(" Start Entering Words One By One.")
 
         r = total_words
 
         for _ in range(r):
             while True:
-                x = input("➡️  ").strip().lower()
+                x = st.text_input("➡️  ").strip().lower()
                 if x in words:
                     total_words -= 1
                     entered_correct_words += 1
-                    print(f"  ✅ Entered Correct Word                                                          Correct words entered: {entered_correct_words}   Remaining words: {total_words}")
+                    st.markdown(f"  ✅ Entered Correct Word                                                          Correct words entered: {entered_correct_words}   Remaining words: {total_words}")
                     break
                 else:
-                    print(f"  ❌ Incorrect Word. Please enter a valid word below.")
-                    print(f"                      Letters Allowed {letters}")
+                    st.markdown(f"  ❌ Incorrect Word. Please enter a valid word below.")
+                    st.markdown(f"                      Letters Allowed {letters}")
 
             if entered_correct_words >= 20:
               if entered_correct_words % 2 == 0:
-                skip = input("  ➡ For Going to the next stage, Enter (YES). Otherwise (NO): ").strip().lower()
+                skip = st.text_input("  ➡ For Going to the next stage, Enter (YES). Otherwise (NO): ").strip().lower()
                 if skip == "yes":
-                    print(f"\n  🎉 Hurray! You have entered {entered_correct_words} Correct Words! 🏆")
-                    print("                        ---Moving to Next Stage---")
+                    st.markdown(f"\n  🎉 Hurray! You have entered {entered_correct_words} Correct Words! 🏆")
+                    st.markdown("                        ---Moving to Next Stage---")
                     return
 
 
@@ -457,29 +458,29 @@ def words_for_each_num_of_letter(n):
         total_words = len(words)
         entered_correct_words = 0
 
-        print("                                     ❗You Have to Enter at least 20 words to finish this stage ❗")
-        print(f"Total Words: {total_words}")
-        print(" Start Entering Words One By One.")
+        st.markdown("                                     ❗You Have to Enter at least 20 words to finish this stage ❗")
+        st.markdown(f"Total Words: {total_words}")
+        st.markdown(" Start Entering Words One By One.")
 
         r = total_words
 
         for _ in range(r):
             while True:
-                x = input("➡️  ").strip().lower()
+                x = st.text_input("➡️  ").strip().lower()
                 if x in words:
                     total_words -= 1
                     entered_correct_words += 1
-                    print(f"  ✅ Entered Correct Word                                                          Correct words entered: {entered_correct_words}   Remaining words: {total_words} ")
+                    st.markdown(f"  ✅ Entered Correct Word                                                          Correct words entered: {entered_correct_words}   Remaining words: {total_words} ")
                     break
                 else:
-                    print(f"  ❌ Incorrect Word. Please enter a valid word below. Letters Allowed {letters}")
+                    st.markdown(f"  ❌ Incorrect Word. Please enter a valid word below. Letters Allowed {letters}")
 
             if entered_correct_words >= 20:
               if entered_correct_words % 2 == 0:
-                skip = input(" ➡ For Going to the next stage, Enter (YES). Otherwise (NO): ").strip().lower()
+                skip = st.text_input(" ➡ For Going to the next stage, Enter (YES). Otherwise (NO): ").strip().lower()
                 if skip == "yes":
-                    print(f"\n🎉 Hurray! You have entered {entered_correct_words} Correct Words! 🏆")
-                    print("                        ---Moving to Next Stage---")
+                    st.markdown(f"\n🎉 Hurray! You have entered {entered_correct_words} Correct Words! 🏆")
+                    st.markdown("                        ---Moving to Next Stage---")
                     return
 def main():
     inc=1
@@ -488,17 +489,17 @@ def main():
     #    num_of_letters_for_each_word=difficuilty_easy()
        letters=give_random_letters_according_to_difficuilty_level(num_of_letters_for_each_word)
        print (f"Make words from the follwing letters")
-       print(f"            {letters}") 
-       print(f" ❗ Each Word must be of {num_of_letters_for_each_word} letters")
+       st.markdown(f"            {letters}") 
+       st.markdown(f" ❗ Each Word must be of {num_of_letters_for_each_word} letters")
        words_for_each_num_of_letter(num_of_letters_for_each_word)
        
-       level=input("""Do you want to move to the next stage? 📈
+       level=st.text_input("""Do you want to move to the next stage? 📈
                    Enter 'Yes' to move to the next stage, 'No' to exit""").lower()
        if level=='yes':
            break
-       print(                            "🌟" * inc + " Moving to the next Difficulty Level " + "🌟" * inc)  
+       st.markdown(                            "🌟" * inc + " Moving to the next Difficulty Level " + "🌟" * inc)  
        inc+=1
 
-    print("                                                       ---- Goodbye 👋 ----")
+    st.markdown("                                                       ---- Goodbye 👋 ----")
 
 main()
