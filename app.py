@@ -1,9 +1,9 @@
-st.markdown("                                          -----🧠🧠🧠 Welcome to Smart Guesser 🧠🧠🧠-----                                         ")
+
 import streamlit as st
 import random 
 from wordfreq import top_n_list
 from collections import Counter
-
+st.markdown("                                          -----🧠🧠🧠 Welcome to Smart Guesser 🧠🧠🧠-----                                         ")
 def give_random_letters_according_to_difficuilty_level(n):
     if n==3:
         random_letters =['a', 'e', 'r', 't', 'l', 'n', 's', 'o', 'p', 'd']
@@ -503,3 +503,4 @@ def main():
     st.markdown("                                                       ---- Goodbye 👋 ----")
 
 main()
+
