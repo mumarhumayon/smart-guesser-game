@@ -76,7 +76,7 @@ if st.session_state.num_letters is None:
 # --- Display Game Info ---
 st.markdown(f"### Stage {st.session_state.stage}")
 st.markdown(f"**Letters:** {st.session_state.letters}")
-st.markdown(f"❗ Each word must have {st.session_state.num_letters} letters")
+st.markdown(f"❗ Each word must have {st.session_state.num_letters} letters and in lowercase")
 st.markdown(f"✅ Correct words entered: {st.session_state.entered_correct_words} / 20")
 st.markdown(f"Remaining possible words: {st.session_state.total_words}")
 
@@ -124,4 +124,5 @@ if st.button("❌ End Game"):
 
 if st.session_state.game_over:
     st.markdown("### 👋 Thanks for playing Smart Guesser!")
+
 
