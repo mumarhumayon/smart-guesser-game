@@ -3,6 +3,7 @@ import random
 from wordfreq import top_n_list
 from collections import Counter
 
+# --- Initialize Session State ---
 if "stage" not in st.session_state:
     st.session_state.stage = 1
 if "num_letters" not in st.session_state:
@@ -17,8 +18,11 @@ if "total_words" not in st.session_state:
     st.session_state.total_words = 0
 if "game_over" not in st.session_state:
     st.session_state.game_over = False
+# For showing feedback after a guess
+if "last_feedback" not in st.session_state:
+    st.session_state.last_feedback = ""
 
- 
+# --- Your Original Functions ---
 def give_random_letters_according_to_difficuilty_level(n):
     letter_sets = {
         3: ['a','e','r','t','l','n','s','o','p','d'],
@@ -62,36 +66,46 @@ def get_valid_words(n, letters):
             valid_words.append(word)
     return sorted(valid_words)
 
- 
+# --- First Stage Initialization ---
 if st.session_state.num_letters is None:
     st.session_state.num_letters = difficuilty(st.session_state.stage)
     st.session_state.letters = give_random_letters_according_to_difficuilty_level(st.session_state.num_letters)
     st.session_state.valid_words = get_valid_words(st.session_state.num_letters, st.session_state.letters)
     st.session_state.total_words = len(st.session_state.valid_words)
 
- 
+# --- Display Game Info ---
 st.markdown(f"### Stage {st.session_state.stage}")
 st.markdown(f"**Letters:** {st.session_state.letters}")
 st.markdown(f"❗ Each word must have {st.session_state.num_letters} letters")
 st.markdown(f"✅ Correct words entered: {st.session_state.entered_correct_words} / 20")
 st.markdown(f"Remaining possible words: {st.session_state.total_words}")
 
- 
-word = st.text_input("➡️ Enter a word:", key="word_input").strip().lower()
-
-if word:
-    if word in st.session_state.valid_words:
+# --- Callback to process the entered word (runs when Enter pressed) ---
+def _process_input():
+    # read, process, clear — only using st.session_state (no st.write inside callback)
+    w = st.session_state.word_input.strip().lower()
+    if not w:
+        return
+    if w in st.session_state.valid_words:
         st.session_state.entered_correct_words += 1
         st.session_state.total_words -= 1
-        st.success(f"✅ '{word}' is correct!")
-        st.session_state.valid_words.remove(word)
+        st.session_state.valid_words.remove(w)
+        st.session_state.last_feedback = f"✅ '{w}' is correct!"
     else:
-        st.error(f"❌ '{word}' is not valid. Letters allowed: {st.session_state.letters}")
-    
-    
+        st.session_state.last_feedback = f"❌ '{w}' is not valid. Letters allowed: {st.session_state.letters}"
+    # clear the input for the next word
     st.session_state.word_input = ""
-    st.experimental_rerun()
- 
+
+# --- Input with on_change callback so pressing Enter submits and clears ---
+st.text_input("➡️ Enter a word:", key="word_input", on_change=_process_input)
+
+# --- Show feedback from last processed word ---
+if st.session_state.last_feedback:
+    # show feedback and then reset it (so it doesn't persist forever)
+    st.markdown(st.session_state.last_feedback)
+    st.session_state.last_feedback = ""
+
+# --- Stage Progression ---
 if st.session_state.entered_correct_words >= 20:
     if st.button("➡ Go to Next Stage"):
         st.session_state.stage += 1
@@ -100,9 +114,11 @@ if st.session_state.entered_correct_words >= 20:
         st.session_state.letters = give_random_letters_according_to_difficuilty_level(st.session_state.num_letters)
         st.session_state.valid_words = get_valid_words(st.session_state.num_letters, st.session_state.letters)
         st.session_state.total_words = len(st.session_state.valid_words)
+        # ensure input cleared for new stage
         st.session_state.word_input = ""
         st.experimental_rerun()
- 
+
+# --- End Game ---
 if st.button("❌ End Game"):
     st.session_state.game_over = True
 
