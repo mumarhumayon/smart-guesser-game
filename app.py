@@ -3,7 +3,6 @@ import random
 from wordfreq import top_n_list
 from collections import Counter
 
-# --- Initialize Session State ---
 if "stage" not in st.session_state:
     st.session_state.stage = 1
 if "num_letters" not in st.session_state:
@@ -18,8 +17,6 @@ if "total_words" not in st.session_state:
     st.session_state.total_words = 0
 if "game_over" not in st.session_state:
     st.session_state.game_over = False
-if "current_input" not in st.session_state:  
-    st.session_state.current_input = ""
 
  
 def give_random_letters_according_to_difficuilty_level(n):
@@ -72,6 +69,7 @@ if st.session_state.num_letters is None:
     st.session_state.valid_words = get_valid_words(st.session_state.num_letters, st.session_state.letters)
     st.session_state.total_words = len(st.session_state.valid_words)
 
+ 
 st.markdown(f"### Stage {st.session_state.stage}")
 st.markdown(f"**Letters:** {st.session_state.letters}")
 st.markdown(f"❗ Each word must have {st.session_state.num_letters} letters")
@@ -79,8 +77,7 @@ st.markdown(f"✅ Correct words entered: {st.session_state.entered_correct_words
 st.markdown(f"Remaining possible words: {st.session_state.total_words}")
 
  
-word = st.text_input("➡️ Enter a word:", value=st.session_state.current_input).strip().lower()
-st.session_state.current_input = word  # Keep last typed value
+word = st.text_input("➡️ Enter a word:", key="word_input").strip().lower()
 
 if word:
     if word in st.session_state.valid_words:
@@ -88,10 +85,12 @@ if word:
         st.session_state.total_words -= 1
         st.success(f"✅ '{word}' is correct!")
         st.session_state.valid_words.remove(word)
-        st.session_state.current_input = ""  # Clear only after correct word
     else:
         st.error(f"❌ '{word}' is not valid. Letters allowed: {st.session_state.letters}")
-
+    
+    
+    st.session_state.word_input = ""
+    st.experimental_rerun()
  
 if st.session_state.entered_correct_words >= 20:
     if st.button("➡ Go to Next Stage"):
@@ -101,7 +100,7 @@ if st.session_state.entered_correct_words >= 20:
         st.session_state.letters = give_random_letters_according_to_difficuilty_level(st.session_state.num_letters)
         st.session_state.valid_words = get_valid_words(st.session_state.num_letters, st.session_state.letters)
         st.session_state.total_words = len(st.session_state.valid_words)
-        st.session_state.current_input = ""  # Reset input for new stage
+        st.session_state.word_input = ""
         st.experimental_rerun()
  
 if st.button("❌ End Game"):
