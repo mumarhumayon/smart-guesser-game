@@ -1,528 +1,107 @@
-
 import streamlit as st
-import random 
+import random
 from wordfreq import top_n_list
 from collections import Counter
-st.markdown("                                          -----🧠🧠🧠 Welcome to Smart Guesser 🧠🧠🧠-----                                         ")
-def give_random_letters_according_to_difficuilty_level(n):
-    if n==3:
-        random_letters =['a', 'e', 'r', 't', 'l', 'n', 's', 'o', 'p', 'd']
-        return random_letters
-    elif n==4:
-        random_letters =['e', 'a', 'r', 't', 'l', 'n', 's', 'o', 'd', 'm', 'p', 'c']
-        return random_letters
-    elif n==5:
-        random_letters = ['e', 'a', 'r', 't', 'l', 'n', 's', 'o', 'd', 'm', 'p', 'c', 'h', 'i', 'u']
-        return random_letters
-    elif n==6:
-        random_letters = ['e', 'a', 'r', 't', 'l', 'n', 's', 'o', 'd', 'm', 'p', 'c', 'h', 'i', 'u', 'g']
-        return random_letters
-    elif n == 7:
-        random_letters = ['e', 'a', 'r', 't', 'l', 'n', 's', 'o', 'd', 'm', 'p', 'c', 'h', 'i', 'u', 'g', 'b', 'y']
-        return random_letters
-    elif n == 8:
-        random_letters = ['e', 'a', 'r', 't', 'l', 'n', 's', 'o', 'd', 'm', 'p', 'c', 'h', 'i', 'u', 'g', 'b']
-        return random_letters
-    elif n == 9:
-        random_letters = ['e', 'a', 'r', 't', 'l', 'n', 's', 'o', 'd', 'm', 'p', 'c', 'h', 'i', 'u', 'g', 'b', 'y']
-        return random_letters
-    elif n == 10:
-        random_letters = ['e', 'a', 'r', 't', 'l', 'n', 's', 'o', 'd', 'm', 'p', 'c', 'h', 'i', 'u', 'g', 'b', 'y', 'f']
-        return random_letters
-    elif n == 11:
-        random_letters = ['e', 'a', 'r', 't', 'l', 'n', 's', 'o', 'd', 'm', 'p', 'c', 'h', 'i', 'u', 'g', 'b', 'y', 'f', 'v']
-        return random_letters
-    elif n == 12:
-        random_letters = ['e', 'a', 'r', 't', 'l', 'n', 's', 'o', 'd', 'm', 'p', 'c', 'h', 'i', 'u', 'g', 'b', 'y', 'f', 'v', 'k']
-        return random_letters
 
+# --- Initialize Session State ---
+if "stage" not in st.session_state:
+    st.session_state.stage = 1
+if "num_letters" not in st.session_state:
+    st.session_state.num_letters = None
+if "letters" not in st.session_state:
+    st.session_state.letters = []
+if "valid_words" not in st.session_state:
+    st.session_state.valid_words = []
+if "entered_correct_words" not in st.session_state:
+    st.session_state.entered_correct_words = 0
+if "total_words" not in st.session_state:
+    st.session_state.total_words = 0
+if "game_over" not in st.session_state:
+    st.session_state.game_over = False
+
+# --- Your Original Functions ---
+def give_random_letters_according_to_difficuilty_level(n):
+    letter_sets = {
+        3: ['a','e','r','t','l','n','s','o','p','d'],
+        4: ['e','a','r','t','l','n','s','o','d','m','p','c'],
+        5: ['e','a','r','t','l','n','s','o','d','m','p','c','h','i','u'],
+        6: ['e','a','r','t','l','n','s','o','d','m','p','c','h','i','u','g'],
+        7: ['e','a','r','t','l','n','s','o','d','m','p','c','h','i','u','g','b','y'],
+        8: ['e','a','r','t','l','n','s','o','d','m','p','c','h','i','u','g','b'],
+        9: ['e','a','r','t','l','n','s','o','d','m','p','c','h','i','u','g','b','y'],
+        10: ['e','a','r','t','l','n','s','o','d','m','p','c','h','i','u','g','b','y','f'],
+        11: ['e','a','r','t','l','n','s','o','d','m','p','c','h','i','u','g','b','y','f','v'],
+        12: ['e','a','r','t','l','n','s','o','d','m','p','c','h','i','u','g','b','y','f','v','k']
+    }
+    return letter_sets.get(n, [])
+
+def difficuilty_easy():
+    return random.randint(3, 6)
+def difficuilty_medium():
+    return random.randint(5, 8)
+def difficuilty_hard():
+    return random.randint(9, 12)
 
 def difficuilty(n):
-    if n==1 or n==2 or n==3:
-      x=  difficuilty_easy()
-      return x
-    elif n>3 and n%3!=0 and n%2==0:
-      x=  difficuilty_medium()
-      return x
-    elif n>3 and n%3==0 and n%2!=0 :
-        x= difficuilty_hard()
-        return x
-def difficuilty_easy():
-    number_of_letters=random.randint(3,6)
-    return(number_of_letters)
-def difficuilty_medium():
-    number_of_letters=random.randint(5,8)
-    return(number_of_letters)
-     
-def difficuilty_hard():
-    number_of_letters=random.randint(9,12)
-    return(number_of_letters)
+    if n <= 3:
+        return difficuilty_easy()
+    elif n > 3 and n % 3 != 0 and n % 2 == 0:
+        return difficuilty_medium()
+    elif n > 3 and n % 3 == 0 and n % 2 != 0:
+        return difficuilty_hard()
 
-def words_for_each_num_of_letter(n): 
-       
-    if n == 3:
-            letters = ['a', 'e', 'r', 't', 'l', 'n', 's', 'o', 'p', 'd']
-            letter_bank = Counter(letters)
-            common_words = top_n_list('en', 50000)
-            valid_words = []
-            for word in common_words:
-                    word = word.lower()   
-                    if len(word) != 3:
-                            continue
-                    word_count = Counter(word)
-                    if all(word_count[c] <= letter_bank[c] for c in word_count):
-                            valid_words.append(word)
-            words = sorted(valid_words)
-            total_words=len(words)
-            entered_correct_words=0
-            st.markdown("                                     ❗You Have to Enter at least 20 words to finish this stage ❗")
-            st.markdown(f"Total Words: {total_words}") 
-            st.markdown(" Start Entering Words One By One.")
-            r=total_words
-    
-            for _ in range(r):
-                    p=0
-                    while True:
-                            
-                            x = st.text_input("➡️  ", key=f"word_input_{p}").strip().lower()
-                            if x:
-                             if x in words:
-                                    total_words -= 1
-                                    entered_correct_words += 1
-                                    st.markdown(f"  ✅ Entered Correct Word                                                          Correct words entered: {entered_correct_words}   Remaining words: {total_words}")
-                                    break
-                             else:
-                                    st.markdown(f"  ❌ Incorrect Word. Please enter a valid word below.                         Letters Allowed {letters} ")
-                            
-                            p+=1
-                            if entered_correct_words >= 20:
-                                if entered_correct_words % 2 == 0:
-                                    skip = st.text_input("  ➡ For Going to the next stage, Enter (YES). Otherwise (NO): ").strip().lower()
-                                    if skip == "yes":
-                                                    st.markdown(f"\n  🎉 Hurray! You have entered {entered_correct_words} Correct Words! 🏆")
-                                                    st.markdown("                        ---Moving to Next Stage---")
-                                                    return
-                                    else:
-                                            pass
-                                    
-                    
-    elif n == 4:
-        letters = ['e', 'a', 'r', 't', 'l', 'n', 's', 'o', 'd', 'm', 'p', 'c']
-        letter_bank = Counter(letters)
-        common_words = top_n_list('en', 50000)
-        valid_words = []
-        for word in common_words:
-            word = word.lower().strip()  # ensure lowercase and clean
-            if len(word) != 4:
-                continue
-            word_count = Counter(word)
-            if all(word_count[c] <= letter_bank[c] for c in word_count):
-                valid_words.append(word)
-        words = sorted(valid_words)
-        total_words = len(words)
-        entered_correct_words = 0
+def get_valid_words(n, letters):
+    letter_bank = Counter(letters)
+    common_words = top_n_list('en', 50000)
+    valid_words = []
+    for word in common_words:
+        word = word.lower().strip()
+        if len(word) != n:
+            continue
+        word_count = Counter(word)
+        if all(word_count[c] <= letter_bank[c] for c in word_count):
+            valid_words.append(word)
+    return sorted(valid_words)
 
-        st.markdown("                                     ❗You Have to Enter at least 20 words to finish this stage ❗")
-        st.markdown(f"Total Words: {total_words}") 
-        st.markdown(" Start Entering Words One By One.")
-        r = total_words
+# --- Game Setup ---
+if st.session_state.num_letters is None:
+    st.session_state.num_letters = difficuilty(st.session_state.stage)
+    st.session_state.letters = give_random_letters_according_to_difficuilty_level(st.session_state.num_letters)
+    st.session_state.valid_words = get_valid_words(st.session_state.num_letters, st.session_state.letters)
+    st.session_state.total_words = len(st.session_state.valid_words)
 
-        for _ in range(r):
-            p=0
-            while True:
-                x = st.text_input("➡️  ", key=f"word_input_{p}").strip().lower()
-                if x:
-                 if x in words:
-                    total_words -= 1
-                    entered_correct_words += 1
-                    st.markdown(f"  ✅ Entered Correct Word                                                          Correct words entered: {entered_correct_words}   Remaining words: {total_words}")
-                    break
-                 else:
-                    st.markdown(f"  ❌ Incorrect Word. Please enter a valid word below.     Letters Allowed {letters}")
-                p+=1
-            if entered_correct_words >= 20:
-               if entered_correct_words % 2 == 0:
-                  skip = st.text_input("    ➡ For Going to the next stage, Enter (YES). Otherwise (NO): ").strip().lower()
-                  if skip == "yes":
-                    st.markdown(f"\n  🎉 Hurray! You have entered {entered_correct_words} Correct Words! 🏆")
-                    st.markdown("                        ---Moving to Next Stage---")
-                    return
+st.markdown(f"### Stage {st.session_state.stage}")
+st.markdown(f"**Letters:** {st.session_state.letters}")
+st.markdown(f"❗ Each word must have {st.session_state.num_letters} letters")
+st.markdown(f"✅ Correct words entered: {st.session_state.entered_correct_words} / 20")
+st.markdown(f"Remaining possible words: {st.session_state.total_words}")
 
+# --- Input ---
+word = st.text_input("➡️ Enter a word:").strip().lower()
 
-    elif n == 5:
- 
-        letters = ['e', 'a', 'r', 't', 'l', 'n', 's', 'o', 'd', 'm', 'p', 'c', 'h', 'i', 'u']
-        letter_bank = Counter(letters)
-        common_words = top_n_list('en', 50000)
-        valid_words = []
-        for word in common_words:
-            word = word.lower().strip()
-            if len(word) != 5:
-                continue
-            word_count = Counter(word)
-            if all(word_count[c] <= letter_bank[c] for c in word_count):
-                valid_words.append(word)
-        words = sorted(valid_words)
-        total_words = len(words)
-        entered_correct_words = 0
+if word:
+    if word in st.session_state.valid_words:
+        st.session_state.entered_correct_words += 1
+        st.session_state.total_words -= 1
+        st.success(f"✅ '{word}' is correct!")
+        st.session_state.valid_words.remove(word)
+    else:
+        st.error(f"❌ '{word}' is not valid. Letters allowed: {st.session_state.letters}")
 
-        st.markdown("                                     ❗You Have to Enter at least 20 words to finish this stage ❗")
-        st.markdown(f"Total Words: {total_words}") 
-        st.markdown(" Start Entering Words One By One.")
-        r = total_words
+# --- Next Stage ---
+if st.session_state.entered_correct_words >= 20:
+    if st.button("➡ Go to Next Stage"):
+        st.session_state.stage += 1
+        st.session_state.entered_correct_words = 0
+        st.session_state.num_letters = difficuilty(st.session_state.stage)
+        st.session_state.letters = give_random_letters_according_to_difficuilty_level(st.session_state.num_letters)
+        st.session_state.valid_words = get_valid_words(st.session_state.num_letters, st.session_state.letters)
+        st.session_state.total_words = len(st.session_state.valid_words)
+        st.experimental_rerun()
 
-        for _ in range(r):
-            p=0
-            while True:
-                x = st.text_input("➡️  ", key=f"word_input_{p}").strip().lower()
-                if x:
-                 if x in words:
-                    total_words -= 1
-                    entered_correct_words += 1
-                    st.markdown(f"  ✅ Entered Correct Word                                                          Correct words entered: {entered_correct_words}   Remaining words: {total_words}")
-                    break
-                 else:
-                    st.markdown(f"  ❌ Incorrect Word. Please enter a valid word below.    Letters Allowed {letters}")
-            p+=1
-            if entered_correct_words >= 20:
-              if entered_correct_words % 2 == 0:
-                skip = st.text_input("    ➡ For Going to the next stage, Enter (YES). Otherwise (NO): ").strip().lower()
-                if skip == "yes":
-                    st.markdown(f"\n  🎉 Hurray! You have entered {entered_correct_words} Correct Words! 🏆")
-                    st.markdown("                        ---Moving to Next Stage---")
-                    return
+# --- End Game ---
+if st.button("❌ End Game"):
+    st.session_state.game_over = True
 
-
-    elif n == 6:
-        letters = ['e', 'a', 'r', 't', 'l', 'n', 's', 'o', 'd', 'm', 'p', 'c', 'h', 'i', 'u', 'g']
-        letter_bank = Counter(letters)
-        common_words = top_n_list('en', 50000)
-        valid_words = []
-        for word in common_words:
-            word = word.lower().strip()
-            if len(word) != 6:
-                continue
-            word_count = Counter(word)
-            if all(word_count[c] <= letter_bank[c] for c in word_count):
-                valid_words.append(word)
-        words = sorted(valid_words)
-        total_words = len(words)
-        entered_correct_words = 0
-
-        st.markdown("                                     ❗You Have to Enter at least 20 words to finish this stage ❗")
-        st.markdown(f"Total Words: {total_words}") 
-        st.markdown(" Start Entering Words One By One.")
-        r = total_words
-
-        for _ in range(r):
-            p=0
-            while True:
-                x = st.text_input("➡️  ", key=f"word_input_{p }").strip().lower()
-                if x:
-                 if x in words:
-                    total_words -= 1
-                    entered_correct_words += 1
-                    st.markdown(f"  ✅ Entered Correct Word                                                          Correct words entered: {entered_correct_words}   Remaining words: {total_words}")
-                    break
-                 else:
-                    st.markdown(f"  ❌ Incorrect Word. Please enter a valid word below.")
-                    st.markdown(f"                      Letters Allowed {letters}")
-                p+=1
-            if entered_correct_words >= 20:
-              if entered_correct_words % 2 == 0:
-                skip = st.text_input("  ➡ For Going to the next stage, Enter (YES). Otherwise (NO): ").strip().lower()
-                if skip == "yes":
-                    st.markdown(f"\n  🎉 Hurray! You have entered {entered_correct_words} Correct Words! 🏆")
-                    st.markdown("                        ---Moving to Next Stage---")
-                    return
-
-
-    elif n == 7:
-        letters = ['e', 'a', 'r', 't', 'l', 'n', 's', 'o', 'd', 'm', 'p', 'c', 'h', 'i', 'u', 'g', 'b', 'y']
-        letter_bank = Counter(letters)
-        common_words = top_n_list('en', 50000)
-        valid_words = []
-        for word in common_words:
-            word = word.lower().strip()
-            if len(word) != 7:
-                continue
-            word_count = Counter(word)
-            if all(word_count[c] <= letter_bank[c] for c in word_count):
-                valid_words.append(word)
-        words = sorted(valid_words)
-        total_words = len(words)
-        entered_correct_words = 0
-
-        st.markdown("                                     ❗You Have to Enter at least 20 words to finish this stage ❗")
-        st.markdown(f"Total Words: {total_words}")
-        st.markdown(" Start Entering Words One By One.")
-
-        r = total_words
-
-        for _ in range(r):
-            p=0
-            while True:
-                x = st.text_input("➡️  ", key=f"word_input_{p }").strip().lower()
-                if x:
-                 if x in words:
-                    total_words -= 1
-                    entered_correct_words += 1
-                    st.markdown(f"  ✅ Entered Correct Word                                                          Correct words entered: {entered_correct_words}   Remaining words: {total_words}")
-                    break
-                 else:
-                    st.markdown(f"  ❌ Incorrect Word. Please enter a valid word below. ")
-                    st.markdown(f"                      Letters Allowed {letters}")
-                p+=1
-            if entered_correct_words >= 20:
-             if entered_correct_words % 2 == 0:
-                skip = st.text_input("  ➡ For Going to the next stage, Enter (YES). Otherwise (NO): ").strip().lower()
-                if skip == "yes":
-                    st.markdown(f"\n  🎉 Hurray! You have entered {entered_correct_words} Correct Words! 🏆")
-                    st.markdown("                        ---Moving to Next Stage---")
-                    return
-
-
-    elif n == 8:
-        letters = ['e', 'a', 'r', 't', 'l', 'n', 's', 'o', 'd', 'm', 'p', 'c', 'h', 'i', 'u', 'g', 'b']
-        letter_bank = Counter(letters)
-        common_words = top_n_list('en', 50000)
-        valid_words = []
-        for word in common_words:
-            word = word.lower().strip()
-            if len(word) != 8:
-                continue
-            word_count = Counter(word)
-            if all(word_count[c] <= letter_bank[c] for c in word_count):
-                valid_words.append(word)
-        words = sorted(valid_words)
-        total_words = len(words)
-        entered_correct_words = 0
-
-        st.markdown("                                     ❗You Have to Enter at least 20 words to finish this stage ❗")
-        st.markdown(f"Total Words: {total_words}")
-        st.markdown(" Start Entering Words One By One.")
-
-        r = total_words
-
-        for _ in range(r):
-            p=0
-            while True:
-                x = st.text_input("➡️  ", key=f"word_input_{p }").strip().lower()
-                if x:
-                 if x in words:
-                    total_words -= 1
-                    entered_correct_words += 1
-                    st.markdown(f"  ✅ Entered Correct Word                                                          Correct words entered: {entered_correct_words}   Remaining words: {total_words}")
-                    break
-                 else:
-                    st.markdown(f"  ❌ Incorrect Word. Please enter a valid word below.")
-                    st.markdown(f"                      Letters Allowed {letters}")
-                p+=1
-            if entered_correct_words >= 20 :
-              if entered_correct_words % 2 == 0:
-                skip = st.text_input("  ➡ For Going to the next stage, Enter (YES). Otherwise (NO): ").strip().lower()
-                if skip == "yes":
-                    st.markdown(f"\n  🎉 Hurray! You have entered {entered_correct_words} Correct Words! 🏆")
-                    st.markdown("                        ---Moving to Next Stage---")
-                    return
-
-
-    elif n == 9:
- 
-        letters = ['e', 'a', 'r', 't', 'l', 'n', 's', 'o', 'd', 'm', 'p', 'c', 'h', 'i', 'u', 'g', 'b', 'y']
-        letter_bank = Counter(letters)
-        common_words = top_n_list('en', 50000)
-        valid_words = []
-        for word in common_words:
-            word = word.lower().strip()
-            if len(word) != 9:
-                continue
-            word_count = Counter(word)
-            if all(word_count[c] <= letter_bank[c] for c in word_count):
-                valid_words.append(word)
-        words = sorted(valid_words)
-        total_words = len(words)
-        entered_correct_words = 0
-
-        st.markdown("                                     ❗You Have to Enter at least 20 words to finish this stage ❗")
-        st.markdown(f"Total Words: {total_words}")
-        st.markdown(" Start Entering Words One By One.")
-
-        r = total_words
-
-        for _ in range(r):
-            p=0
-            while True:
-                x = st.text_input("➡️  ", key=f"word_input_{p }").strip().lower()
-                if x:
-                 if x in words:
-                    total_words -= 1
-                    entered_correct_words += 1
-                    st.markdown(f"  ✅ Entered Correct Word                                                          Correct words entered: {entered_correct_words}   Remaining words: {total_words}")
-                    break
-                 else:
-                    st.markdown(f"❌ Incorrect Word. Please enter a valid word below.")
-                    st.markdown(f"                      Letters Allowed {letters}")
-            p+=1
-            if entered_correct_words >= 20:
-              if entered_correct_words % 2 == 0:
-                skip = st.text_input("  ➡ For Going to the next stage, Enter (YES). Otherwise (NO): ").strip().lower()
-                if skip == "yes":
-                    st.markdown(f"\n  🎉 Hurray! You have entered {entered_correct_words} Correct Words! 🏆")
-                    st.markdown("                        ---Moving to Next Stage---")
-                    return
-
-
-    elif n == 10:
-        letters = ['e', 'a', 'r', 't', 'l', 'n', 's', 'o', 'd', 'm', 'p', 'c', 'h', 'i', 'u', 'g', 'b', 'y', 'f']
-        letter_bank = Counter(letters)
-        common_words = top_n_list('en', 50000)
-        valid_words = []
-        for word in common_words:
-            word = word.lower().strip()
-            if len(word) != 10:
-                continue
-            word_count = Counter(word)
-            if all(word_count[c] <= letter_bank[c] for c in word_count):
-                valid_words.append(word)
-        words = sorted(valid_words)
-        total_words = len(words)
-        entered_correct_words = 0
-
-        st.markdown("                                     ❗You Have to Enter at least 20 words to finish this stage ❗")
-        st.markdown(f"Total Words: {total_words}")
-        st.markdown(" Start Entering Words One By One.")
-
-        r = total_words
-
-        for _ in range(r):
-            p=0
-            while True:
-                x = st.text_input("➡️  ", key=f"word_input_{p }").strip().lower()
-                if x:
-                 if x in words:
-                    total_words -= 1
-                    entered_correct_words += 1
-                    st.markdown(f"  ✅ Entered Correct Word                                                          Correct words entered: {entered_correct_words}   Remaining words: {total_words}")
-                    break
-                 else:
-                    st.markdown(f"  ❌ Incorrect Word. Please enter a valid word below. ")
-                    st.markdown(f"                      Letters Allowed {letters}")
-            p+=1
-            if entered_correct_words >= 20:
-             if entered_correct_words % 2 == 0:
-                skip = st.text_input("➡ For Going to the next stage, Enter (YES). Otherwise (NO): ").strip().lower()
-                if skip == "yes":
-                    st.markdown(f"\n  🎉 Hurray! You have entered {entered_correct_words} Correct Words! 🏆")
-                    st.markdown("                        ---Moving to Next Stage---")
-                    return
-
-
-    elif n == 11:
-        letters = ['e', 'a', 'r', 't', 'l', 'n', 's', 'o', 'd', 'm', 'p', 'c', 'h', 'i', 'u', 'g', 'b', 'y', 'f', 'v']
-        letter_bank = Counter(letters)
-        common_words = top_n_list('en', 50000)
-        valid_words = []
-        for word in common_words:
-            word = word.lower().strip()
-            if len(word) != 11:
-                continue
-            word_count = Counter(word)
-            if all(word_count[c] <= letter_bank[c] for c in word_count):
-                valid_words.append(word)
-        words = sorted(valid_words)
-        total_words = len(words)
-        entered_correct_words = 0
-
-        st.markdown("                                     ❗You Have to Enter at least 20 words to finish this stage ❗")
-        st.markdown(f"Total Words: {total_words}")
-        st.markdown(" Start Entering Words One By One.")
-
-        r = total_words
-
-        for _ in range(r):
-            p=0
-            while True:
-                x = st.text_input("➡️  ", key=f"word_input_{p}").strip().lower()
-                if x:
-                 if x in words:
-                    total_words -= 1
-                    entered_correct_words += 1
-                    st.markdown(f"  ✅ Entered Correct Word                                                          Correct words entered: {entered_correct_words}   Remaining words: {total_words}")
-                    break
-                 else:
-                    st.markdown(f"  ❌ Incorrect Word. Please enter a valid word below.")
-                    st.markdown(f"                      Letters Allowed {letters}")
-            p+=1
-            if entered_correct_words >= 20:
-              if entered_correct_words % 2 == 0:
-                skip = st.text_input("  ➡ For Going to the next stage, Enter (YES). Otherwise (NO): ").strip().lower()
-                if skip == "yes":
-                    st.markdown(f"\n  🎉 Hurray! You have entered {entered_correct_words} Correct Words! 🏆")
-                    st.markdown("                        ---Moving to Next Stage---")
-                    return
-
-
-    elif n == 12:
-        letters = ['e', 'a', 'r', 't', 'l', 'n', 's', 'o', 'd', 'm', 'p', 'c', 'h', 'i', 'u', 'g', 'b', 'y', 'f', 'v', 'k']
-        letter_bank = Counter(letters)
-        common_words = top_n_list('en', 50000)
-        valid_words = []
-        for word in common_words:
-            word = word.lower().strip()
-            if len(word) != 12:
-                continue
-            word_count = Counter(word)
-            if all(word_count[c] <= letter_bank[c] for c in word_count):
-                valid_words.append(word)
-        words = sorted(valid_words)
-        total_words = len(words)
-        entered_correct_words = 0
-
-        st.markdown("                                     ❗You Have to Enter at least 20 words to finish this stage ❗")
-        st.markdown(f"Total Words: {total_words}")
-        st.markdown(" Start Entering Words One By One.")
-
-        r = total_words
-
-        for _ in range(r):
-            p=0
-            while True:
-                x = st.text_input("➡️  ", key=f"word_input_{p }").strip().lower()
-                if x:
-                 if x in words:
-                    total_words -= 1
-                    entered_correct_words += 1
-                    st.markdown(f"  ✅ Entered Correct Word                                                          Correct words entered: {entered_correct_words}   Remaining words: {total_words} ")
-                    break
-                 else:
-                    st.markdown(f"  ❌ Incorrect Word. Please enter a valid word below. Letters Allowed {letters}")
-                p+=1
-            if entered_correct_words >= 20:
-              if entered_correct_words % 2 == 0:
-                skip = st.text_input(" ➡ For Going to the next stage, Enter (YES). Otherwise (NO): ").strip().lower()
-                if skip == "yes":
-                    st.markdown(f"\n🎉 Hurray! You have entered {entered_correct_words} Correct Words! 🏆")
-                    st.markdown("                        ---Moving to Next Stage---")
-                    return
-def main():
-    inc=1
-    num_of_letters_for_each_word=difficuilty(inc)
-    while True:
-    #    num_of_letters_for_each_word=difficuilty_easy()
-       letters=give_random_letters_according_to_difficuilty_level(num_of_letters_for_each_word)
-       print (f"Make words from the follwing letters")
-       st.markdown(f"            {letters}") 
-       st.markdown(f" ❗ Each Word must be of {num_of_letters_for_each_word} letters")
-       words_for_each_num_of_letter(num_of_letters_for_each_word)
-       
-       level=st.text_input("""Do you want to move to the next stage? 📈
-                   Enter 'Yes' to move to the next stage, 'No' to exit""").lower()
-       if level=='yes':
-           break
-       st.markdown(                            "🌟" * inc + " Moving to the next Difficulty Level " + "🌟" * inc)  
-       inc+=1
-
-    st.markdown("                                                       ---- Goodbye 👋 ----")
-
-main()
+if st.session_state.game_over:
+    st.markdown("### 👋 Thanks for playing Smart Guesser!")
