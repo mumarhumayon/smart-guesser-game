@@ -92,7 +92,7 @@ def _process_input():
         st.session_state.valid_words.remove(w)
         st.session_state.last_feedback = f"✅ '{w}' is correct!"
     else:
-        st.session_state.last_feedback = f"❌ '{w}' is not valid. Letters allowed: {st.session_state.letters}"
+        st.session_state.last_feedback = f"❌ '{w}' is not valid."
     # clear the input for the next word
     st.session_state.word_input = ""
 
@@ -124,3 +124,4 @@ if st.button("❌ End Game"):
 
 if st.session_state.game_over:
     st.markdown("### 👋 Thanks for playing Smart Guesser!")
+
